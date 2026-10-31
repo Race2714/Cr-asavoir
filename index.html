@@ -184,7 +184,1616 @@ function questionSuivante() {
 
 afficherQuestion();
 
+</
+
+<section style="background:#e8f8f0;padding:20px;margin:20px;border-radius:12px;">
+
+  <h2>🔬 Quiz éducatif : Les sciences</h2>
+
+  <p id="question-sciences"></p>
+
+  <div id="reponses-sciences"></div>
+
+  <p id="resultat-sciences"></p>
+
+  <button id="suivant-sciences" onclick="questionSuivanteSciences()" style="display:none;padding:10px 15px;">
+
+    Question suivante
+
+  </button>
+
+  <p id="score-sciences"></p>
+
+</section>
+
+<script>
+
+const questionsSciences = [
+
+  {
+
+    question: "Quel organe permet de pomper le sang dans le corps ?",
+
+    reponses: ["Le cerveau", "Le cœur", "L'estomac"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quelle est la principale source de lumière naturelle de la Terre ?",
+
+    reponses: ["La Lune", "Le Soleil", "Les étoiles"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quel gaz respirons-nous principalement pour vivre ?",
+
+    reponses: ["L'oxygène", "Le dioxyde de carbone", "L'hydrogène"],
+
+    bonne: 0
+
+  }
+
+];
+
+let numeroSciences = 0;
+
+let scoreSciences = 0;
+
+function afficherQuestionSciences() {
+
+  const q = questionsSciences[numeroSciences];
+
+  document.getElementById("question-sciences").textContent = q.question;
+
+  document.getElementById("resultat-sciences").textContent = "";
+
+  document.getElementById("score-sciences").textContent = "";
+
+  document.getElementById("suivant-sciences").style.display = "none";
+
+  const zone = document.getElementById("reponses-sciences");
+
+  zone.innerHTML = "";
+
+  q.reponses.forEach((reponse, index) => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.margin = "5px";
+
+    bouton.style.padding = "10px";
+
+    bouton.onclick = () => verifierSciences(index);
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function verifierSciences(index) {
+
+  const q = questionsSciences[numeroSciences];
+
+  const boutons = document.getElementById("reponses-sciences").children;
+
+  for (let bouton of boutons) {
+
+    bouton.disabled = true;
+
+  }
+
+  if (index === q.bonne) {
+
+    scoreSciences++;
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo ! 🎉 Bonne réponse !";
+
+  } else {
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Essaie encore 😊 La bonne réponse était : " + q.reponses[q.bonne];
+
+  }
+
+  document.getElementById("suivant-sciences").style.display = "inline-block";
+
+}
+
+function questionSuivanteSciences() {
+
+  numeroSciences++;
+
+  if (numeroSciences < questionsSciences.length) {
+
+    afficherQuestionSciences();
+
+  } else {
+
+    document.getElementById("question-sciences").textContent =
+
+      "🎉 Quiz terminé !";
+
+    document.getElementById("reponses-sciences").innerHTML = "";
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo pour ta participation !";
+
+    document.getElementById("suivant-sciences").style.display = "none";
+
+    document.getElementById("score-sciences").textContent =
+
+      "Ton score : " + scoreSciences + " / " + questionsSciences.length;
+
+  }
+
+}
+
+afficherQuestionSciences();
+
 </script>
-  
+
+
+<section style="background:#e8f8f0;padding:20px;margin:20px;border-radius:12px;">
+
+  <h2>🔬 Quiz éducatif : Les sciences</h2>
+
+  <p id="question-sciences"></p>
+
+  <div id="reponses-sciences"></div>
+
+  <p id="resultat-sciences"></p>
+
+  <button id="suivant-sciences" onclick="questionSuivanteSciences()" style="display:none;padding:10px 15px;">
+
+    Question suivante
+
+  </button>
+
+  <p id="score-sciences"></p>
+
+</section>
+
+<script>
+
+const questionsSciences = [
+
+  {
+
+    question: "Quel organe permet de pomper le sang dans le corps ?",
+
+    reponses: ["Le cerveau", "Le cœur", "L'estomac"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quelle est la principale source de lumière naturelle de la Terre ?",
+
+    reponses: ["La Lune", "Le Soleil", "Les étoiles"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quel gaz respirons-nous principalement pour vivre ?",
+
+    reponses: ["L'oxygène", "Le dioxyde de carbone", "L'hydrogène"],
+
+    bonne: 0
+
+  }
+
+];
+
+let numeroSciences = 0;
+
+let scoreSciences = 0;
+
+function afficherQuestionSciences() {
+
+  const q = questionsSciences[numeroSciences];
+
+  document.getElementById("question-sciences").textContent = q.question;
+
+  document.getElementById("resultat-sciences").textContent = "";
+
+  document.getElementById("score-sciences").textContent = "";
+
+  document.getElementById("suivant-sciences").style.display = "none";
+
+  const zone = document.getElementById("reponses-sciences");
+
+  zone.innerHTML = "";
+
+  q.reponses.forEach((reponse, index) => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.margin = "5px";
+
+    bouton.style.padding = "10px";
+
+    bouton.onclick = () => verifierSciences(index);
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function verifierSciences(index) {
+
+  const q = questionsSciences[numeroSciences];
+
+  const boutons = document.getElementById("reponses-sciences").children;
+
+  for (let bouton of boutons) {
+
+    bouton.disabled = true;
+
+  }
+
+  if (index === q.bonne) {
+
+    scoreSciences++;
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo ! 🎉 Bonne réponse !";
+
+  } else {
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Essaie encore 😊 La bonne réponse était : " + q.reponses[q.bonne];
+
+  }
+
+  document.getElementById("suivant-sciences").style.display = "inline-block";
+
+}
+
+function questionSuivanteSciences() {
+
+  numeroSciences++;
+
+  if (numeroSciences < questionsSciences.length) {
+
+    afficherQuestionSciences();
+
+  } else {
+
+    document.getElementById("question-sciences").textContent =
+
+      "🎉 Quiz terminé !";
+
+    document.getElementById("reponses-sciences").innerHTML = "";
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo pour ta participation !";
+
+    document.getElementById("suivant-sciences").style.display = "none";
+
+    document.getElementById("score-sciences").textContent =
+
+      "Ton score : " + scoreSciences + " / " + questionsSciences.length;
+
+  }
+
+}
+
+afficherQuestionSciences();
+
+</script>
+
+
+<section style="background:#e8f8f0;padding:20px;margin:20px;border-radius:12px;">
+
+  <h2>🔬 Quiz éducatif : Les sciences</h2>
+
+  <p id="question-sciences"></p>
+
+  <div id="reponses-sciences"></div>
+
+  <p id="resultat-sciences"></p>
+
+  <button id="suivant-sciences" onclick="questionSuivanteSciences()" style="display:none;padding:10px 15px;">
+
+    Question suivante
+
+  </button>
+
+  <p id="score-sciences"></p>
+
+</section>
+
+<script>
+
+const questionsSciences = [
+
+  {
+
+    question: "Quel organe permet de pomper le sang dans le corps ?",
+
+    reponses: ["Le cerveau", "Le cœur", "L'estomac"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quelle est la principale source de lumière naturelle de la Terre ?",
+
+    reponses: ["La Lune", "Le Soleil", "Les étoiles"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quel gaz respirons-nous principalement pour vivre ?",
+
+    reponses: ["L'oxygène", "Le dioxyde de carbone", "L'hydrogène"],
+
+    bonne: 0
+
+  }
+
+];
+
+let numeroSciences = 0;
+
+let scoreSciences = 0;
+
+function afficherQuestionSciences() {
+
+  const q = questionsSciences[numeroSciences];
+
+  document.getElementById("question-sciences").textContent = q.question;
+
+  document.getElementById("resultat-sciences").textContent = "";
+
+  document.getElementById("score-sciences").textContent = "";
+
+  document.getElementById("suivant-sciences").style.display = "none";
+
+  const zone = document.getElementById("reponses-sciences");
+
+  zone.innerHTML = "";
+
+  q.reponses.forEach((reponse, index) => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.margin = "5px";
+
+    bouton.style.padding = "10px";
+
+    bouton.onclick = () => verifierSciences(index);
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function verifierSciences(index) {
+
+  const q = questionsSciences[numeroSciences];
+
+  const boutons = document.getElementById("reponses-sciences").children;
+
+  for (let bouton of boutons) {
+
+    bouton.disabled = true;
+
+  }
+
+  if (index === q.bonne) {
+
+    scoreSciences++;
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo ! 🎉 Bonne réponse !";
+
+  } else {
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Essaie encore 😊 La bonne réponse était : " + q.reponses[q.bonne];
+
+  }
+
+  document.getElementById("suivant-sciences").style.display = "inline-block";
+
+}
+
+function questionSuivanteSciences() {
+
+  numeroSciences++;
+
+  if (numeroSciences < questionsSciences.length) {
+
+    afficherQuestionSciences();
+
+  } else {
+
+    document.getElementById("question-sciences").textContent =
+
+      "🎉 Quiz terminé !";
+
+    document.getElementById("reponses-sciences").innerHTML = "";
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo pour ta participation !";
+
+    document.getElementById("suivant-sciences").style.display = "none";
+
+    document.getElementById("score-sciences").textContent =
+
+      "Ton score : " + scoreSciences + " / " + questionsSciences.length;
+
+  }
+
+}
+
+afficherQuestionSciences();
+
+</script>
+
+
+<section style="background:#e8f8f0;padding:20px;margin:20px;border-radius:12px;">
+
+  <h2>🔬 Quiz éducatif : Les sciences</h2>
+
+  <p id="question-sciences"></p>
+
+  <div id="reponses-sciences"></div>
+
+  <p id="resultat-sciences"></p>
+
+  <button id="suivant-sciences" onclick="questionSuivanteSciences()" style="display:none;padding:10px 15px;">
+
+    Question suivante
+
+  </button>
+
+  <p id="score-sciences"></p>
+
+</section>
+
+<script>
+
+const questionsSciences = [
+
+  {
+
+    question: "Quel organe permet de pomper le sang dans le corps ?",
+
+    reponses: ["Le cerveau", "Le cœur", "L'estomac"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quelle est la principale source de lumière naturelle de la Terre ?",
+
+    reponses: ["La Lune", "Le Soleil", "Les étoiles"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quel gaz respirons-nous principalement pour vivre ?",
+
+    reponses: ["L'oxygène", "Le dioxyde de carbone", "L'hydrogène"],
+
+    bonne: 0
+
+  }
+
+];
+
+let numeroSciences = 0;
+
+let scoreSciences = 0;
+
+function afficherQuestionSciences() {
+
+  const q = questionsSciences[numeroSciences];
+
+  document.getElementById("question-sciences").textContent = q.question;
+
+  document.getElementById("resultat-sciences").textContent = "";
+
+  document.getElementById("score-sciences").textContent = "";
+
+  document.getElementById("suivant-sciences").style.display = "none";
+
+  const zone = document.getElementById("reponses-sciences");
+
+  zone.innerHTML = "";
+
+  q.reponses.forEach((reponse, index) => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.margin = "5px";
+
+    bouton.style.padding = "10px";
+
+    bouton.onclick = () => verifierSciences(index);
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function verifierSciences(index) {
+
+  const q = questionsSciences[numeroSciences];
+
+  const boutons = document.getElementById("reponses-sciences").children;
+
+  for (let bouton of boutons) {
+
+    bouton.disabled = true;
+
+  }
+
+  if (index === q.bonne) {
+
+    scoreSciences++;
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo ! 🎉 Bonne réponse !";
+
+  } else {
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Essaie encore 😊 La bonne réponse était : " + q.reponses[q.bonne];
+
+  }
+
+  document.getElementById("suivant-sciences").style.display = "inline-block";
+
+}
+
+function questionSuivanteSciences() {
+
+  numeroSciences++;
+
+  if (numeroSciences < questionsSciences.length) {
+
+    afficherQuestionSciences();
+
+  } else {
+
+    document.getElementById("question-sciences").textContent =
+
+      "🎉 Quiz terminé !";
+
+    document.getElementById("reponses-sciences").innerHTML = "";
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo pour ta participation !";
+
+    document.getElementById("suivant-sciences").style.display = "none";
+
+    document.getElementById("score-sciences").textContent =
+
+      "Ton score : " + scoreSciences + " / " + questionsSciences.length;
+
+  }
+
+}
+
+afficherQuestionSciences();
+
+</script>
+
+
+<section style="background:#e8f8f0;padding:20px;margin:20px;border-radius:12px;">
+
+  <h2>🔬 Quiz éducatif : Les sciences</h2>
+
+  <p id="question-sciences"></p>
+
+  <div id="reponses-sciences"></div>
+
+  <p id="resultat-sciences"></p>
+
+  <button id="suivant-sciences" onclick="questionSuivanteSciences()" style="display:none;padding:10px 15px;">
+
+    Question suivante
+
+  </button>
+
+  <p id="score-sciences"></p>
+
+</section>
+
+<script>
+
+const questionsSciences = [
+
+  {
+
+    question: "Quel organe permet de pomper le sang dans le corps ?",
+
+    reponses: ["Le cerveau", "Le cœur", "L'estomac"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quelle est la principale source de lumière naturelle de la Terre ?",
+
+    reponses: ["La Lune", "Le Soleil", "Les étoiles"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quel gaz respirons-nous principalement pour vivre ?",
+
+    reponses: ["L'oxygène", "Le dioxyde de carbone", "L'hydrogène"],
+
+    bonne: 0
+
+  }
+
+];
+
+let numeroSciences = 0;
+
+let scoreSciences = 0;
+
+function afficherQuestionSciences() {
+
+  const q = questionsSciences[numeroSciences];
+
+  document.getElementById("question-sciences").textContent = q.question;
+
+  document.getElementById("resultat-sciences").textContent = "";
+
+  document.getElementById("score-sciences").textContent = "";
+
+  document.getElementById("suivant-sciences").style.display = "none";
+
+  const zone = document.getElementById("reponses-sciences");
+
+  zone.innerHTML = "";
+
+  q.reponses.forEach((reponse, index) => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.margin = "5px";
+
+    bouton.style.padding = "10px";
+
+    bouton.onclick = () => verifierSciences(index);
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function verifierSciences(index) {
+
+  const q = questionsSciences[numeroSciences];
+
+  const boutons = document.getElementById("reponses-sciences").children;
+
+  for (let bouton of boutons) {
+
+    bouton.disabled = true;
+
+  }
+
+  if (index === q.bonne) {
+
+    scoreSciences++;
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo ! 🎉 Bonne réponse !";
+
+  } else {
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Essaie encore 😊 La bonne réponse était : " + q.reponses[q.bonne];
+
+  }
+
+  document.getElementById("suivant-sciences").style.display = "inline-block";
+
+}
+
+function questionSuivanteSciences() {
+
+  numeroSciences++;
+
+  if (numeroSciences < questionsSciences.length) {
+
+    afficherQuestionSciences();
+
+  } else {
+
+    document.getElementById("question-sciences").textContent =
+
+      "🎉 Quiz terminé !";
+
+    document.getElementById("reponses-sciences").innerHTML = "";
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo pour ta participation !";
+
+    document.getElementById("suivant-sciences").style.display = "none";
+
+    document.getElementById("score-sciences").textContent =
+
+      "Ton score : " + scoreSciences + " / " + questionsSciences.length;
+
+  }
+
+}
+
+afficherQuestionSciences();
+
+</script>
+
+
+<section style="background:#e8f8f0;padding:20px;margin:20px;border-radius:12px;">
+
+  <h2>🔬 Quiz éducatif : Les sciences</h2>
+
+  <p id="question-sciences"></p>
+
+  <div id="reponses-sciences"></div>
+
+  <p id="resultat-sciences"></p>
+
+  <button id="suivant-sciences" onclick="questionSuivanteSciences()" style="display:none;padding:10px 15px;">
+
+    Question suivante
+
+  </button>
+
+  <p id="score-sciences"></p>
+
+</section>
+
+<script>
+
+const questionsSciences = [
+
+  {
+
+    question: "Quel organe permet de pomper le sang dans le corps ?",
+
+    reponses: ["Le cerveau", "Le cœur", "L'estomac"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quelle est la principale source de lumière naturelle de la Terre ?",
+
+    reponses: ["La Lune", "Le Soleil", "Les étoiles"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quel gaz respirons-nous principalement pour vivre ?",
+
+    reponses: ["L'oxygène", "Le dioxyde de carbone", "L'hydrogène"],
+
+    bonne: 0
+
+  }
+
+];
+
+let numeroSciences = 0;
+
+let scoreSciences = 0;
+
+function afficherQuestionSciences() {
+
+  const q = questionsSciences[numeroSciences];
+
+  document.getElementById("question-sciences").textContent = q.question;
+
+  document.getElementById("resultat-sciences").textContent = "";
+
+  document.getElementById("score-sciences").textContent = "";
+
+  document.getElementById("suivant-sciences").style.display = "none";
+
+  const zone = document.getElementById("reponses-sciences");
+
+  zone.innerHTML = "";
+
+  q.reponses.forEach((reponse, index) => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.margin = "5px";
+
+    bouton.style.padding = "10px";
+
+    bouton.onclick = () => verifierSciences(index);
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function verifierSciences(index) {
+
+  const q = questionsSciences[numeroSciences];
+
+  const boutons = document.getElementById("reponses-sciences").children;
+
+  for (let bouton of boutons) {
+
+    bouton.disabled = true;
+
+  }
+
+  if (index === q.bonne) {
+
+    scoreSciences++;
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo ! 🎉 Bonne réponse !";
+
+  } else {
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Essaie encore 😊 La bonne réponse était : " + q.reponses[q.bonne];
+
+  }
+
+  document.getElementById("suivant-sciences").style.display = "inline-block";
+
+}
+
+function questionSuivanteSciences() {
+
+  numeroSciences++;
+
+  if (numeroSciences < questionsSciences.length) {
+
+    afficherQuestionSciences();
+
+  } else {
+
+    document.getElementById("question-sciences").textContent =
+
+      "🎉 Quiz terminé !";
+
+    document.getElementById("reponses-sciences").innerHTML = "";
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo pour ta participation !";
+
+    document.getElementById("suivant-sciences").style.display = "none";
+
+    document.getElementById("score-sciences").textContent =
+
+      "Ton score : " + scoreSciences + " / " + questionsSciences.length;
+
+  }
+
+}
+
+afficherQuestionSciences();
+
+</script>
+
+
+<section style="background:#e8f8f0;padding:20px;margin:20px;border-radius:12px;">
+
+  <h2>🔬 Quiz éducatif : Les sciences</h2>
+
+  <p id="question-sciences"></p>
+
+  <div id="reponses-sciences"></div>
+
+  <p id="resultat-sciences"></p>
+
+  <button id="suivant-sciences" onclick="questionSuivanteSciences()" style="display:none;padding:10px 15px;">
+
+    Question suivante
+
+  </button>
+
+  <p id="score-sciences"></p>
+
+</section>
+
+<script>
+
+const questionsSciences = [
+
+  {
+
+    question: "Quel organe permet de pomper le sang dans le corps ?",
+
+    reponses: ["Le cerveau", "Le cœur", "L'estomac"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quelle est la principale source de lumière naturelle de la Terre ?",
+
+    reponses: ["La Lune", "Le Soleil", "Les étoiles"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quel gaz respirons-nous principalement pour vivre ?",
+
+    reponses: ["L'oxygène", "Le dioxyde de carbone", "L'hydrogène"],
+
+    bonne: 0
+
+  }
+
+];
+
+let numeroSciences = 0;
+
+let scoreSciences = 0;
+
+function afficherQuestionSciences() {
+
+  const q = questionsSciences[numeroSciences];
+
+  document.getElementById("question-sciences").textContent = q.question;
+
+  document.getElementById("resultat-sciences").textContent = "";
+
+  document.getElementById("score-sciences").textContent = "";
+
+  document.getElementById("suivant-sciences").style.display = "none";
+
+  const zone = document.getElementById("reponses-sciences");
+
+  zone.innerHTML = "";
+
+  q.reponses.forEach((reponse, index) => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.margin = "5px";
+
+    bouton.style.padding = "10px";
+
+    bouton.onclick = () => verifierSciences(index);
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function verifierSciences(index) {
+
+  const q = questionsSciences[numeroSciences];
+
+  const boutons = document.getElementById("reponses-sciences").children;
+
+  for (let bouton of boutons) {
+
+    bouton.disabled = true;
+
+  }
+
+  if (index === q.bonne) {
+
+    scoreSciences++;
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo ! 🎉 Bonne réponse !";
+
+  } else {
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Essaie encore 😊 La bonne réponse était : " + q.reponses[q.bonne];
+
+  }
+
+  document.getElementById("suivant-sciences").style.display = "inline-block";
+
+}
+
+function questionSuivanteSciences() {
+
+  numeroSciences++;
+
+  if (numeroSciences < questionsSciences.length) {
+
+    afficherQuestionSciences();
+
+  } else {
+
+    document.getElementById("question-sciences").textContent =
+
+      "🎉 Quiz terminé !";
+
+    document.getElementById("reponses-sciences").innerHTML = "";
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo pour ta participation !";
+
+    document.getElementById("suivant-sciences").style.display = "none";
+
+    document.getElementById("score-sciences").textContent =
+
+      "Ton score : " + scoreSciences + " / " + questionsSciences.length;
+
+  }
+
+}
+
+afficherQuestionSciences();
+
+</script>
+
+
+<section style="background:#e8f8f0;padding:20px;margin:20px;border-radius:12px;">
+
+  <h2>🔬 Quiz éducatif : Les sciences</h2>
+
+  <p id="question-sciences"></p>
+
+  <div id="reponses-sciences"></div>
+
+  <p id="resultat-sciences"></p>
+
+  <button id="suivant-sciences" onclick="questionSuivanteSciences()" style="display:none;padding:10px 15px;">
+
+    Question suivante
+
+  </button>
+
+  <p id="score-sciences"></p>
+
+</section>
+
+<script>
+
+const questionsSciences = [
+
+  {
+
+    question: "Quel organe permet de pomper le sang dans le corps ?",
+
+    reponses: ["Le cerveau", "Le cœur", "L'estomac"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quelle est la principale source de lumière naturelle de la Terre ?",
+
+    reponses: ["La Lune", "Le Soleil", "Les étoiles"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quel gaz respirons-nous principalement pour vivre ?",
+
+    reponses: ["L'oxygène", "Le dioxyde de carbone", "L'hydrogène"],
+
+    bonne: 0
+
+  }
+
+];
+
+let numeroSciences = 0;
+
+let scoreSciences = 0;
+
+function afficherQuestionSciences() {
+
+  const q = questionsSciences[numeroSciences];
+
+  document.getElementById("question-sciences").textContent = q.question;
+
+  document.getElementById("resultat-sciences").textContent = "";
+
+  document.getElementById("score-sciences").textContent = "";
+
+  document.getElementById("suivant-sciences").style.display = "none";
+
+  const zone = document.getElementById("reponses-sciences");
+
+  zone.innerHTML = "";
+
+  q.reponses.forEach((reponse, index) => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.margin = "5px";
+
+    bouton.style.padding = "10px";
+
+    bouton.onclick = () => verifierSciences(index);
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function verifierSciences(index) {
+
+  const q = questionsSciences[numeroSciences];
+
+  const boutons = document.getElementById("reponses-sciences").children;
+
+  for (let bouton of boutons) {
+
+    bouton.disabled = true;
+
+  }
+
+  if (index === q.bonne) {
+
+    scoreSciences++;
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo ! 🎉 Bonne réponse !";
+
+  } else {
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Essaie encore 😊 La bonne réponse était : " + q.reponses[q.bonne];
+
+  }
+
+  document.getElementById("suivant-sciences").style.display = "inline-block";
+
+}
+
+function questionSuivanteSciences() {
+
+  numeroSciences++;
+
+  if (numeroSciences < questionsSciences.length) {
+
+    afficherQuestionSciences();
+
+  } else {
+
+    document.getElementById("question-sciences").textContent =
+
+      "🎉 Quiz terminé !";
+
+    document.getElementById("reponses-sciences").innerHTML = "";
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo pour ta participation !";
+
+    document.getElementById("suivant-sciences").style.display = "none";
+
+    document.getElementById("score-sciences").textContent =
+
+      "Ton score : " + scoreSciences + " / " + questionsSciences.length;
+
+  }
+
+}
+
+afficherQuestionSciences();
+
+</script>
+
+
+<section style="background:#e8f8f0;padding:20px;margin:20px;border-radius:12px;">
+
+  <h2>🔬 Quiz éducatif : Les sciences</h2>
+
+  <p id="question-sciences"></p>
+
+  <div id="reponses-sciences"></div>
+
+  <p id="resultat-sciences"></p>
+
+  <button id="suivant-sciences" onclick="questionSuivanteSciences()" style="display:none;padding:10px 15px;">
+
+    Question suivante
+
+  </button>
+
+  <p id="score-sciences"></p>
+
+</section>
+
+<script>
+
+const questionsSciences = [
+
+  {
+
+    question: "Quel organe permet de pomper le sang dans le corps ?",
+
+    reponses: ["Le cerveau", "Le cœur", "L'estomac"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quelle est la principale source de lumière naturelle de la Terre ?",
+
+    reponses: ["La Lune", "Le Soleil", "Les étoiles"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quel gaz respirons-nous principalement pour vivre ?",
+
+    reponses: ["L'oxygène", "Le dioxyde de carbone", "L'hydrogène"],
+
+    bonne: 0
+
+  }
+
+];
+
+let numeroSciences = 0;
+
+let scoreSciences = 0;
+
+function afficherQuestionSciences() {
+
+  const q = questionsSciences[numeroSciences];
+
+  document.getElementById("question-sciences").textContent = q.question;
+
+  document.getElementById("resultat-sciences").textContent = "";
+
+  document.getElementById("score-sciences").textContent = "";
+
+  document.getElementById("suivant-sciences").style.display = "none";
+
+  const zone = document.getElementById("reponses-sciences");
+
+  zone.innerHTML = "";
+
+  q.reponses.forEach((reponse, index) => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.margin = "5px";
+
+    bouton.style.padding = "10px";
+
+    bouton.onclick = () => verifierSciences(index);
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function verifierSciences(index) {
+
+  const q = questionsSciences[numeroSciences];
+
+  const boutons = document.getElementById("reponses-sciences").children;
+
+  for (let bouton of boutons) {
+
+    bouton.disabled = true;
+
+  }
+
+  if (index === q.bonne) {
+
+    scoreSciences++;
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo ! 🎉 Bonne réponse !";
+
+  } else {
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Essaie encore 😊 La bonne réponse était : " + q.reponses[q.bonne];
+
+  }
+
+  document.getElementById("suivant-sciences").style.display = "inline-block";
+
+}
+
+function questionSuivanteSciences() {
+
+  numeroSciences++;
+
+  if (numeroSciences < questionsSciences.length) {
+
+    afficherQuestionSciences();
+
+  } else {
+
+    document.getElementById("question-sciences").textContent =
+
+      "🎉 Quiz terminé !";
+
+    document.getElementById("reponses-sciences").innerHTML = "";
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo pour ta participation !";
+
+    document.getElementById("suivant-sciences").style.display = "none";
+
+    document.getElementById("score-sciences").textContent =
+
+      "Ton score : " + scoreSciences + " / " + questionsSciences.length;
+
+  }
+
+}
+
+afficherQuestionSciences();
+
+</script>
+
+
+<section style="background:#e8f8f0;padding:20px;margin:20px;border-radius:12px;">
+
+  <h2>🔬 Quiz éducatif : Les sciences</h2>
+
+  <p id="question-sciences"></p>
+
+  <div id="reponses-sciences"></div>
+
+  <p id="resultat-sciences"></p>
+
+  <button id="suivant-sciences" onclick="questionSuivanteSciences()" style="display:none;padding:10px 15px;">
+
+    Question suivante
+
+  </button>
+
+  <p id="score-sciences"></p>
+
+</section>
+
+<script>
+
+const questionsSciences = [
+
+  {
+
+    question: "Quel organe permet de pomper le sang dans le corps ?",
+
+    reponses: ["Le cerveau", "Le cœur", "L'estomac"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quelle est la principale source de lumière naturelle de la Terre ?",
+
+    reponses: ["La Lune", "Le Soleil", "Les étoiles"],
+
+    bonne: 1
+
+  },
+
+  {
+
+    question: "Quel gaz respirons-nous principalement pour vivre ?",
+
+    reponses: ["L'oxygène", "Le dioxyde de carbone", "L'hydrogène"],
+
+    bonne: 0
+
+  }
+
+];
+
+let numeroSciences = 0;
+
+let scoreSciences = 0;
+
+function afficherQuestionSciences() {
+
+  const q = questionsSciences[numeroSciences];
+
+  document.getElementById("question-sciences").textContent = q.question;
+
+  document.getElementById("resultat-sciences").textContent = "";
+
+  document.getElementById("score-sciences").textContent = "";
+
+  document.getElementById("suivant-sciences").style.display = "none";
+
+  const zone = document.getElementById("reponses-sciences");
+
+  zone.innerHTML = "";
+
+  q.reponses.forEach((reponse, index) => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.margin = "5px";
+
+    bouton.style.padding = "10px";
+
+    bouton.onclick = () => verifierSciences(index);
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function verifierSciences(index) {
+
+  const q = questionsSciences[numeroSciences];
+
+  const boutons = document.getElementById("reponses-sciences").children;
+
+  for (let bouton of boutons) {
+
+    bouton.disabled = true;
+
+  }
+
+  if (index === q.bonne) {
+
+    scoreSciences++;
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo ! 🎉 Bonne réponse !";
+
+  } else {
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Essaie encore 😊 La bonne réponse était : " + q.reponses[q.bonne];
+
+  }
+
+  document.getElementById("suivant-sciences").style.display = "inline-block";
+
+}
+
+function questionSuivanteSciences() {
+
+  numeroSciences++;
+
+  if (numeroSciences < questionsSciences.length) {
+
+    afficherQuestionSciences();
+
+  } else {
+
+    document.getElementById("question-sciences").textContent =
+
+      "🎉 Quiz terminé !";
+
+    document.getElementById("reponses-sciences").innerHTML = "";
+
+    document.getElementById("resultat-sciences").textContent =
+
+      "Bravo pour ta participation !";
+
+    document.getElementById("suivant-sciences").style.display = "none";
+
+    document.getElementById("score-sciences").textContent =
+
+      "Ton score : " + scoreSciences + " / " + questionsSciences.length;
+
+  }
+
+}
+
+afficherQuestionSciences();
+
+</script>
+
 </body> 
 </html>
