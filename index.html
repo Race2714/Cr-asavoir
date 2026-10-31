@@ -23,5 +23,40 @@
 </section>
 </main>
 <footer>© CréaSavoir — Apprendre avec plaisir</footer>
-</body>
+ <section style="background:#eef2ff;padding:20px;margin:20px;border-radius:12px;">
+
+  <h2>🧠 Quiz éducatif</h2>
+
+  <p>Combien font 5 + 3 ?</p>
+
+  <button onclick="verifier(false)">6</button>
+
+  <button onclick="verifier(true)">8</button>
+
+  <button onclick="verifier(false)">10</button>
+
+  <p id="resultat"></p>
+
+</section>
+
+<script>
+
+function verifier(bonneReponse) {
+
+  const resultat = document.getElementById("resultat");
+
+  if (bonneReponse) {
+
+    resultat.textContent = "Bravo ! 🎉 Bonne réponse !";
+
+  } else {
+
+    resultat.textContent = "Essaie encore 😊";
+
+  }
+
+}
+
+</script> 
+</body> 
 </html>
