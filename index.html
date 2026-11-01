@@ -513,6 +513,150 @@ function questionSuivanteFrancais() {
 }
 
 afficherQuestionFrancais();
+</script 
+<!-- QUIZ HISTOIRE-GEOGRAPHIE -->
+
+<section id="quiz-histoire" style="background:#fff;padding:20px;margin:20px auto;max-width:850px;border-radius:15px;">
+
+  <h2>🌍 Quiz d’Histoire-Géographie</h2>
+
+  <p id="questionHistoire"></p>
+
+  <div id="choixHistoire"></div>
+
+  <p id="resultatHistoire"></p>
+
+  <button onclick="questionSuivanteHistoire()" id="suivantHistoire" style="display:none;padding:10px 18px;background:#3155d9;color:white;border:0;border-radius:8px;">
+
+    Question suivante
+
+  </button>
+
+  <p id="scoreHistoire"></p>
+
+</section>
+
+<script>
+
+const questionsHistoire = [
+
+  {
+
+    question: "Quel est le plus grand continent du monde ?",
+
+    choix: ["Afrique", "Asie", "Europe"],
+
+    reponse: "Asie"
+
+  },
+
+  {
+
+    question: "Quelle est la capitale de la République démocratique du Congo ?",
+
+    choix: ["Kinshasa", "Lubumbashi", "Goma"],
+
+    reponse: "Kinshasa"
+
+  },
+
+  {
+
+    question: "En quelle année la RDC a-t-elle obtenu son indépendance ?",
+
+    choix: ["1958", "1960", "1965"],
+
+    reponse: "1960"
+
+  }
+
+];
+
+let numeroHistoire = 0;
+
+let scoreHistoire = 0;
+
+let reponduHistoire = false;
+
+function afficherQuestionHistoire() {
+
+  reponduHistoire = false;
+
+  const q = questionsHistoire[numeroHistoire];
+
+  document.getElementById("questionHistoire").textContent =
+
+    (numeroHistoire + 1) + ". " + q.question;
+
+  document.getElementById("choixHistoire").innerHTML = "";
+
+  document.getElementById("resultatHistoire").textContent = "";
+
+  document.getElementById("suivantHistoire").style.display = "none";
+
+  q.choix.forEach(function(choix) {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = choix;
+
+    bouton.style = "display:block;margin:8px 0;padding:10px;width:100%;border:1px solid #3155d9;border-radius:8px;background:#f3f6ff;";
+
+    bouton.onclick = function() {
+
+      if (reponduHistoire) return;
+
+      reponduHistoire = true;
+
+      if (choix === q.reponse) {
+
+        scoreHistoire++;
+
+        document.getElementById("resultatHistoire").textContent = "Bonne réponse ! 🎉";
+
+      } else {
+
+        document.getElementById("resultatHistoire").textContent =
+
+          "Pas tout à fait. La bonne réponse est : " + q.reponse;
+
+      }
+
+      document.getElementById("suivantHistoire").style.display = "block";
+
+    };
+
+    document.getElementById("choixHistoire").appendChild(bouton);
+
+  });
+
+}
+
+function questionSuivanteHistoire() {
+
+  numeroHistoire++;
+
+  if (numeroHistoire < questionsHistoire.length) {
+
+    afficherQuestionHistoire();
+
+  } else {
+
+    document.getElementById("questionHistoire").textContent = "Quiz terminé !";
+
+    document.getElementById("choixHistoire").innerHTML = "";
+
+    document.getElementById("resultatHistoire").textContent =
+
+      "Ton score : " + scoreHistoire + " / " + questionsHistoire.length;
+
+    document.getElementById("suivantHistoire").style.display = "none";
+
+  }
+
+}
+
+afficherQuestionHistoire();
 
 
 </body> 
