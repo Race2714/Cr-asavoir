@@ -658,6 +658,184 @@ function questionSuivanteHistoire() {
 
 afficherQuestionHistoire();
 </script>
+<section id="quiz-culture">
 
+  <h2>🌍 Quiz de culture générale</h2>
+
+  <p id="questionCulture"></p>
+
+  <div id="choixCulture"></div>
+
+  <p id="resultatCulture"></p>
+
+  <button id="suivantCulture" onclick="questionSuivanteCulture()">
+
+    Question suivante
+
+  </button>
+
+</section>
+
+<script>
+
+const questionsCulture = [
+
+  {
+
+    question: "Combien de jours compte une année ordinaire ?",
+
+    choix: ["360 jours", "365 jours", "366 jours"],
+
+    reponse: "365 jours"
+
+  },
+
+  {
+
+    question: "Quel est le plus vaste océan du monde ?",
+
+    choix: ["Océan Atlantique", "Océan Indien", "Océan Pacifique"],
+
+    reponse: "Océan Pacifique"
+
+  },
+
+  {
+
+    question: "Combien de couleurs compte l’arc-en-ciel traditionnel ?",
+
+    choix: ["5 couleurs", "7 couleurs", "9 couleurs"],
+
+    reponse: "7 couleurs"
+
+  }
+
+];
+
+let numeroCulture = 0;
+
+let scoreCulture = 0;
+
+let reponduCulture = false;
+
+function afficherQuestionCulture() {
+
+  reponduCulture = false;
+
+  const q = questionsCulture[numeroCulture];
+
+  document.getElementById("questionCulture").textContent =
+
+    (numeroCulture + 1) + ". " + q.question;
+
+  document.getElementById("resultatCulture").textContent = "";
+
+  document.getElementById("choixCulture").innerHTML = "";
+
+  q.choix.forEach(choix => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = choix;
+
+    bouton.style.display = "block";
+
+    bouton.style.margin = "8px 0";
+
+    bouton.style.padding = "10px";
+
+    bouton.style.width = "100%";
+
+    bouton.style.borderRadius = "8px";
+
+    bouton.style.border = "1px solid #3155d9";
+
+    bouton.style.background = "#ffffff";
+
+    bouton.onclick = function() {
+
+      if (reponduCulture) return;
+
+      reponduCulture = true;
+
+      if (choix === q.reponse) {
+
+        scoreCulture++;
+
+        document.getElementById("resultatCulture").textContent =
+
+          "Bonne réponse ! 🎉";
+
+      } else {
+
+        document.getElementById("resultatCulture").textContent =
+
+          "Mauvaise réponse. La bonne réponse est : " + q.reponse;
+
+      }
+
+    };
+
+    document.getElementById("choixCulture").appendChild(bouton);
+
+  });
+
+  document.getElementById("suivantCulture").textContent =
+
+    numeroCulture === questionsCulture.length - 1
+
+      ? "Voir mon résultat"
+
+      : "Question suivante";
+
+}
+
+function questionSuivanteCulture() {
+
+  if (!reponduCulture) {
+
+    document.getElementById("resultatCulture").textContent =
+
+      "Choisis une réponse avant de continuer.";
+
+    return;
+
+  }
+
+  numeroCulture++;
+
+  if (numeroCulture < questionsCulture.length) {
+
+    afficherQuestionCulture();
+
+  } else {
+
+    document.getElementById("quiz-culture").innerHTML =
+
+      "<h2>Résultat du quiz 🌍</h2>" +
+
+      "<p>Tu as obtenu " + scoreCulture + " / " +
+
+      questionsCulture.length + " bonnes réponses !</p>" +
+
+      "<button onclick='recommencerCulture()'>Recommencer</button>";
+
+  }
+
+}
+
+function recommencerCulture() {
+
+  numeroCulture = 0;
+
+  scoreCulture = 0;
+
+  afficherQuestionCulture();
+
+}
+
+afficherQuestionCulture();
+
+</script>
 </body> 
 </html>
