@@ -838,4 +838,207 @@ afficherQuestionCulture();
 
 </script>
 </body> 
+<section id="quiz-culture-auto" style="background:#f3f6ff;padding:20px;border-radius:12px;margin:20px 0;">
+
+  <h2>🌍 Quiz de culture générale</h2>
+
+  <p id="culture-progression"></p>
+
+  <h3 id="culture-question"></h3>
+
+  <div id="culture-choix"></div>
+
+  <p id="culture-resultat"></p>
+
+  <button id="culture-suivant" onclick="cultureSuivante()" style="padding:12px;background:#3155d9;color:white;border:0;border-radius:8px;">
+
+    Valider ma réponse
+
+  </button>
+
+</section>
+
+<script>
+
+const banqueCulture = [
+
+  {q:"Quelle est la capitale de la France ?", c:["Paris","Rome","Madrid"], r:"Paris"},
+
+  {q:"Quel animal est surnommé le roi de la jungle ?", c:["Éléphant","Lion","Tigre"], r:"Lion"},
+
+  {q:"Combien y a-t-il de continents ?", c:["5","6","7"], r:"7"},
+
+  {q:"Quelle planète est la plus proche du Soleil ?", c:["Mars","Mercure","Vénus"], r:"Mercure"},
+
+  {q:"Qui a peint la Joconde ?", c:["Pablo Picasso","Léonard de Vinci","Van Gogh"], r:"Léonard de Vinci"},
+
+  {q:"Quel est le plus grand mammifère du monde ?", c:["Éléphant","Baleine bleue","Girafe"], r:"Baleine bleue"},
+
+  {q:"Dans quel pays se trouvent les pyramides de Gizeh ?", c:["Égypte","Grèce","Inde"], r:"Égypte"},
+
+  {q:"Combien de côtés possède un hexagone ?", c:["5","6","8"], r:"6"},
+
+  {q:"Quelle langue parle-t-on principalement au Brésil ?", c:["Espagnol","Portugais","Français"], r:"Portugais"},
+
+  {q:"Combien de touches possède généralement un piano classique ?", c:["66","88","100"], r:"88"},
+
+  {q:"Quel est le plus grand océan du monde ?", c:["Atlantique","Indien","Pacifique"], r:"Pacifique"},
+
+  {q:"Quelle est la monnaie utilisée aux États-Unis ?", c:["Euro","Dollar","Livre"], r:"Dollar"},
+
+  {q:"Combien de jours compte une année bissextile ?", c:["365","366","364"], r:"366"},
+
+  {q:"Quel organe permet de respirer ?", c:["Le cœur","Les poumons","L'estomac"], r:"Les poumons"},
+
+  {q:"Quelle est la capitale de la République démocratique du Congo ?", c:["Lubumbashi","Kinshasa","Goma"], r:"Kinshasa"}
+
+];
+
+let cultureQuestions = [];
+
+let cultureNumero = 0;
+
+let cultureScore = 0;
+
+let cultureChoix = "";
+
+let cultureTermine = false;
+
+function demarrerCulture() {
+
+  cultureQuestions = [...banqueCulture]
+
+    .sort(() => Math.random() - 0.5)
+
+    .slice(0, 10);
+
+  cultureNumero = 0;
+
+  cultureScore = 0;
+
+  cultureTermine = false;
+
+  afficherCulture();
+
+}
+
+function afficherCulture() {
+
+  cultureChoix = "";
+
+  const q = cultureQuestions[cultureNumero];
+
+  document.getElementById("culture-progression").textContent =
+
+    "Question " + (cultureNumero + 1) + " sur 10";
+
+  document.getElementById("culture-question").textContent = q.q;
+
+  document.getElementById("culture-resultat").textContent = "";
+
+  document.getElementById("culture-suivant").textContent = "Valider ma réponse";
+
+  const zone = document.getElementById("culture-choix");
+
+  zone.innerHTML = "";
+
+  q.c.forEach(reponse => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.cssText = "display:block;width:100%;padding:12px;margin:8px 0;border:1px solid #3155d9;border-radius:8px;background:white;";
+
+    bouton.onclick = () => {
+
+      if (cultureChoix !== "") return;
+
+      cultureChoix = reponse;
+
+      bouton.style.background = "#dce5ff";
+
+    };
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function cultureSuivante() {
+
+  if (cultureTermine) {
+
+    demarrerCulture();
+
+    return;
+
+  }
+
+  if (cultureChoix === "") {
+
+    document.getElementById("culture-resultat").textContent =
+
+      "Choisis une réponse d'abord.";
+
+    return;
+
+  }
+
+  const q = cultureQuestions[cultureNumero];
+
+  if (cultureChoix === q.r) {
+
+    cultureScore++;
+
+    document.getElementById("culture-resultat").textContent = "Bonne réponse ! 🎉";
+
+  } else {
+
+    document.getElementById("culture-resultat").textContent =
+
+      "La bonne réponse était : " + q.r;
+
+  }
+
+  cultureNumero++;
+
+  if (cultureNumero < 10) {
+
+    document.getElementById("culture-suivant").textContent = "Continuer";
+
+    document.getElementById("culture-suivant").onclick = cultureAfficherSuite;
+
+  } else {
+
+    cultureTermine = true;
+
+    document.getElementById("culture-question").textContent =
+
+      "Quiz terminé ! Ton score : " + cultureScore + " / 10";
+
+    document.getElementById("culture-progression").textContent = "Bravo pour ta participation !";
+
+    document.getElementById("culture-choix").innerHTML = "";
+
+    document.getElementById("culture-suivant").textContent = "Rejouer";
+
+    document.getElementById("culture-suivant").onclick = demarrerCulture;
+
+  }
+
+}
+
+function cultureAfficherSuite() {
+
+  document.getElementById("culture-suivant").onclick = cultureSuivante;
+
+  afficherCulture();
+
+}
+
+demarrerCulture();
+
+</script>
 </html>
