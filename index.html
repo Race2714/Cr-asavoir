@@ -26,79 +26,154 @@
  
 
 
-<section style="background:#eef2ff;padding:20px;margin:20px;border-radius:12px;">
 
-  <h2>🧠 Quiz éducatif</h2>
+<section id="quiz-maths-auto" style="background:#eef2ff;padding:20px;margin:20px;border-radius:12px;">
 
-  <p id="question"></p>
+  <h2>🔢 Quiz de mathématiques</h2>
 
-  <div id="reponses"></div>
+  <p id="maths-progression"></p>
 
-  <p id="resultat"></p>
+  <h3 id="maths-question"></h3>
 
-  <button id="suivant" onclick="questionSuivante()" style="display:none;">
+  <div id="maths-choix"></div>
+
+  <p id="maths-resultat"></p>
+
+  <p id="maths-score"></p>
+
+  <button id="maths-suivant" onclick="mathsSuivante()" style="display:none;padding:12px 18px;border:0;border-radius:8px;background:#3155d9;color:white;">
 
     Question suivante
 
   </button>
 
-  <p id="score"></p>
-
 </section>
 
 <script>
 
-const questions = [
+const banqueMaths = [];
 
-  {
+function ajouterMaths(question, bonne) {
 
-    question: "Combien font 5 + 3 ?",
+  const choix = new Set([bonne]);
 
-    reponses: ["6", "8", "10"],
+  while (choix.size < 4) {
 
-    bonne: 1
+    let ecart = Math.floor(Math.random() * 11) - 5;
 
-  },
-
-  {
-
-    question: "Quelle planète est surnommée la planète rouge ?",
-
-    reponses: ["Vénus", "Mars", "Jupiter"],
-
-    bonne: 1
-
-  },
-
-  {
-
-    question: "Combien de côtés a un triangle ?",
-
-    reponses: ["2", "3", "4"],
-
-    bonne: 1
+    if (ecart !== 0) choix.add(bonne + ecart);
 
   }
 
-];
+  const reponses = [...choix].sort(() => Math.random() - 0.5);
 
-let numeroQuestion = 0;
+  banqueMaths.push({
 
-let score = 0;
+    question,
 
-function afficherQuestion() {
+    reponses,
 
-  const q = questions[numeroQuestion];
+    bonne: reponses.indexOf(bonne)
 
-  document.getElementById("question").textContent = q.question;
+  });
 
-  document.getElementById("resultat").textContent = "";
+}
 
-  document.getElementById("score").textContent = "";
+// 25 additions
 
-  document.getElementById("suivant").style.display = "none";
+for (let i = 0; i < 25; i++) {
 
-  const zone = document.getElementById("reponses");
+  let a = Math.floor(Math.random() * 90) + 10;
+
+  let b = Math.floor(Math.random() * 90) + 10;
+
+  ajouterMaths(`${a} + ${b} = ?`, a + b);
+
+}
+
+// 25 soustractions
+
+for (let i = 0; i < 25; i++) {
+
+  let a = Math.floor(Math.random() * 90) + 20;
+
+  let b = Math.floor(Math.random() * a);
+
+  ajouterMaths(`${a} - ${b} = ?`, a - b);
+
+}
+
+// 25 multiplications
+
+for (let i = 0; i < 25; i++) {
+
+  let a = Math.floor(Math.random() * 12) + 2;
+
+  let b = Math.floor(Math.random() * 12) + 2;
+
+  ajouterMaths(`${a} × ${b} = ?`, a * b);
+
+}
+
+// 25 divisions exactes
+
+for (let i = 0; i < 25; i++) {
+
+  let diviseur = Math.floor(Math.random() * 11) + 2;
+
+  let quotient = Math.floor(Math.random() * 12) + 2;
+
+  let dividende = diviseur * quotient;
+
+  ajouterMaths(`${dividende} ÷ ${diviseur} = ?`, quotient);
+
+}
+
+let partieMaths = [];
+
+let numeroMaths = 0;
+
+let scoreMaths = 0;
+
+let mathsValidee = false;
+
+function demarrerMaths() {
+
+  partieMaths = [...banqueMaths]
+
+    .sort(() => Math.random() - 0.5)
+
+    .slice(0, 10);
+
+  numeroMaths = 0;
+
+  scoreMaths = 0;
+
+  mathsValidee = false;
+
+  afficherMaths();
+
+}
+
+function afficherMaths() {
+
+  const q = partieMaths[numeroMaths];
+
+  document.getElementById("maths-progression").textContent =
+
+    `Question ${numeroMaths + 1} sur 10`;
+
+  document.getElementById("maths-question").textContent = q.question;
+
+  document.getElementById("maths-resultat").textContent = "";
+
+  document.getElementById("maths-score").textContent =
+
+    `Score : ${scoreMaths}`;
+
+  document.getElementById("maths-suivant").style.display = "none";
+
+  const zone = document.getElementById("maths-choix");
 
   zone.innerHTML = "";
 
@@ -108,83 +183,114 @@ function afficherQuestion() {
 
     bouton.textContent = reponse;
 
-    bouton.style.margin = "5px";
+    bouton.style.margin = "6px";
 
-    bouton.style.padding = "10px";
+    bouton.style.padding = "12px";
 
-    bouton.onclick = () => verifierReponse(index);
+    bouton.style.borderRadius = "8px";
+
+    bouton.style.border = "1px solid #3155d9";
+
+    bouton.style.background = "white";
+
+    bouton.onclick = () => verifierMaths(index);
 
     zone.appendChild(bouton);
 
   });
 
+  mathsValidee = false;
+
 }
 
-function verifierReponse(index) {
+function verifierMaths(index) {
 
-  const q = questions[numeroQuestion];
+  if (mathsValidee) return;
 
-  const boutons = document.getElementById("reponses").children;
+  const q = partieMaths[numeroMaths];
 
-  for (let bouton of boutons) {
+  const boutons = document.getElementById("maths-choix").children;
 
-    bouton.disabled = true;
-
-  }
+  for (const bouton of boutons) bouton.disabled = true;
 
   if (index === q.bonne) {
 
-    score++;
+    scoreMaths++;
 
-    document.getElementById("resultat").textContent =
+    document.getElementById("maths-resultat").textContent =
 
       "Bravo ! 🎉 Bonne réponse !";
 
   } else {
 
-    document.getElementById("resultat").textContent =
+    document.getElementById("maths-resultat").textContent =
 
-      "Essaie encore 😊 La bonne réponse était : " + q.reponses[q.bonne];
+      "Pas tout à fait 😊 La bonne réponse était : " +
+
+      q.reponses[q.bonne];
 
   }
 
-  document.getElementById("suivant").style.display = "inline-block";
+  document.getElementById("maths-score").textContent =
+
+    `Score : ${scoreMaths} / 10`;
+
+  document.getElementById("maths-suivant").textContent =
+
+    numeroMaths === 9 ? "Voir mon résultat" : "Question suivante";
+
+  document.getElementById("maths-suivant").style.display =
+
+    "inline-block";
+
+  mathsValidee = true;
 
 }
 
-function questionSuivante() {
+function mathsSuivante() {
 
-  numeroQuestion++;
+  if (!mathsValidee) return;
 
-  if (numeroQuestion < questions.length) {
+  if (numeroMaths < 9) {
 
-    afficherQuestion();
+    numeroMaths++;
+
+    afficherMaths();
 
   } else {
 
-    document.getElementById("question").textContent =
+    document.getElementById("maths-progression").textContent =
 
-      "🎉 Quiz terminé !";
+      "Partie terminée !";
 
-    document.getElementById("reponses").innerHTML = "";
+    document.getElementById("maths-question").textContent =
 
-    document.getElementById("resultat").textContent =
+      "🎉 Bravo pour ta participation !";
 
-      "Bravo pour ta participation !";
+    document.getElementById("maths-choix").innerHTML = "";
 
-    document.getElementById("suivant").style.display = "none";
+    document.getElementById("maths-resultat").textContent =
 
-    document.getElementById("score").textContent =
+      `Ton résultat : ${scoreMaths} / 10`;
 
-      "Ton score : " + score + " / " + questions.length;
+    document.getElementById("maths-suivant").textContent =
+
+      "Rejouer";
+
+    document.getElementById("maths-suivant").onclick =
+
+      demarrerMaths;
+
+    mathsValidee = false;
 
   }
-ni
+
 }
 
-afficherQuestion();
+demarrerMaths();
 
 </script>
+
 
 <section style="background:#e8f8f0;padding:20px;margin:20px;border-radius:12px;">
 
