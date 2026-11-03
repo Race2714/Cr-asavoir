@@ -808,149 +808,241 @@ demarrerFrancais();
 
 <!-- QUIZ HISTOIRE-GEOGRAPHIE -->
 
-<section id="quiz-histoire" style="background:#fff;padding:20px;margin:20px auto;max-width:850px;border-radius:15px;">
+<section id="quiz-histoire-auto" style="background:#fff4e8;padding:20px;margin:20px;border-radius:12px;">
 
-  <h2>🌍 Quiz d’Histoire-Géographie</h2>
+  <h2>🌍 Quiz Histoire-géographie</h2>
 
-  <p id="questionHistoire"></p>
+  <p>Teste tes connaissances avec 10 questions choisies au hasard !</p>
 
-  <div id="choixHistoire"></div>
+  <div id="hg-question"></div>
 
-  <p id="resultatHistoire"></p>
+  <div id="hg-reponses"></div>
 
-  <button onclick="questionSuivanteHistoire()" id="suivantHistoire" style="display:none;padding:10px 18px;background:#3155d9;color:white;border:0;border-radius:8px;">
+  <p id="hg-feedback"></p>
 
-    Question suivante
+  <p id="hg-score"></p>
 
-  </button>
+  <button id="hg-suivant" onclick="hgSuivante()" style="display:none;">Question suivante</button>
 
-  <p id="scoreHistoire"></p>
+  <button id="hg-rejouer" onclick="hgDemarrer()" style="display:none;">Rejouer</button>
 
 </section>
 
 <script>
 
-const questionsHistoire = [
+const hgBase = [
 
-  {
+{q:"En quelle année la RDC a-t-elle accédé à l'indépendance ?",r:["1958","1960","1965","1970"],b:1},
 
-    question: "Quel est le plus grand continent du monde ?",
+{q:"Quelle est la capitale de la RDC ?",r:["Lubumbashi","Kisangani","Kinshasa","Goma"],b:2},
 
-    choix: ["Afrique", "Asie", "Europe"],
+{q:"Quel fleuve traverse la ville de Kinshasa ?",r:["Le Nil","Le fleuve Congo","Le Niger","Le Zambèze"],b:1},
 
-    reponse: "Asie"
+{q:"Quel est le plus grand continent du monde ?",r:["Afrique","Europe","Asie","Océanie"],b:2},
 
-  },
+{q:"Quel océan se trouve à l'ouest de l'Afrique ?",r:["Océan Indien","Océan Atlantique","Océan Arctique","Océan Pacifique"],b:1},
 
-  {
+{q:"Qui fut le premier président de la RDC indépendante ?",r:["Mobutu Sese Seko","Joseph Kasa-Vubu","Laurent-Désiré Kabila","Patrice Lumumba"],b:1},
 
-    question: "Quelle est la capitale de la République démocratique du Congo ?",
+{q:"En quelle année la Première Guerre mondiale a-t-elle commencé ?",r:["1914","1918","1939","1945"],b:0},
 
-    choix: ["Kinshasa", "Lubumbashi", "Goma"],
+{q:"En quelle année la Seconde Guerre mondiale s'est-elle terminée ?",r:["1918","1939","1944","1945"],b:3},
 
-    reponse: "Kinshasa"
+{q:"Quel pays a pour capitale Paris ?",r:["Italie","France","Espagne","Belgique"],b:1},
 
-  },
+{q:"Sur quel continent se trouve le Brésil ?",r:["Afrique","Asie","Amérique du Sud","Europe"],b:2},
 
-  {
+{q:"Quel est le plus grand océan du monde ?",r:["Atlantique","Indien","Arctique","Pacifique"],b:3},
 
-    question: "En quelle année la RDC a-t-elle obtenu son indépendance ?",
+{q:"Quel pays est surnommé le pays du Soleil-Levant ?",r:["Chine","Japon","Inde","Corée du Sud"],b:1},
 
-    choix: ["1958", "1960", "1965"],
+{q:"Quelle est la capitale du Kenya ?",r:["Nairobi","Kampala","Dakar","Lagos"],b:0},
 
-    reponse: "1960"
+{q:"Quel désert est le plus vaste désert chaud du monde ?",r:["Gobi","Kalahari","Sahara","Atacama"],b:2},
 
-  }
+{q:"Quel est le siège principal de l'Organisation des Nations unies ?",r:["Genève","New York","Paris","Londres"],b:1},
+
+{q:"Quel pays africain a pour capitale Addis-Abeba ?",r:["Éthiopie","Ghana","Sénégal","Angola"],b:0},
+
+{q:"En quelle année l'ONU a-t-elle été créée ?",r:["1919","1939","1945","1960"],b:2},
+
+{q:"Quel est le plus haut sommet du monde ?",r:["Kilimandjaro","Mont Everest","Mont Blanc","Mont Kenya"],b:1},
+
+{q:"Quelle mer sépare l'Europe de l'Afrique ?",r:["Mer Rouge","Mer Noire","Mer Méditerranée","Mer Baltique"],b:2},
+
+{q:"Quel pays a pour capitale Brasilia ?",r:["Argentine","Brésil","Pérou","Chili"],b:1},
+
+{q:"Quel est le plus grand pays d'Afrique par sa superficie ?",r:["RDC","Algérie","Soudan","Libye"],b:1},
+
+{q:"Quel explorateur européen est arrivé aux Amériques en 1492 ?",r:["Vasco de Gama","Christophe Colomb","Marco Polo","Magellan"],b:1},
+
+{q:"Quelle est la capitale de l'Égypte ?",r:["Le Caire","Rabat","Tunis","Tripoli"],b:0},
+
+{q:"Quel pays africain a pour capitale Accra ?",r:["Nigeria","Ghana","Cameroun","Togo"],b:1},
+
+{q:"Quel est le nom de l'ancienne capitale de l'Empire romain ?",r:["Athènes","Rome","Carthage","Alexandrie"],b:1}
 
 ];
 
-let numeroHistoire = 0;
+const hgBanque = Array.from({length:100},(_,i)=>({
 
-let scoreHistoire = 0;
+  ...hgBase[i % hgBase.length],
 
-let reponduHistoire = false;
+  id:"hg-"+i
 
-function afficherQuestionHistoire() {
+}));
 
-  reponduHistoire = false;
+let hgQuestions = [];
 
-  const q = questionsHistoire[numeroHistoire];
+let hgIndex = 0;
 
-  document.getElementById("questionHistoire").textContent =
+let hgPoints = 0;
 
-    (numeroHistoire + 1) + ". " + q.question;
+let hgBloque = false;
 
-  document.getElementById("choixHistoire").innerHTML = "";
+function hgMelanger(liste) {
 
-  document.getElementById("resultatHistoire").textContent = "";
+  return [...liste].sort(() => Math.random() - 0.5);
 
-  document.getElementById("suivantHistoire").style.display = "none";
+}
 
-  q.choix.forEach(function(choix) {
+function hgDemarrer() {
+
+  hgQuestions = hgMelanger(hgBanque).slice(0,10);
+
+  hgIndex = 0;
+
+  hgPoints = 0;
+
+  document.getElementById("hg-rejouer").style.display = "none";
+
+  hgAfficher();
+
+}
+
+function hgAfficher() {
+
+  hgBloque = false;
+
+  const item = hgQuestions[hgIndex];
+
+  document.getElementById("hg-question").innerHTML =
+
+    "<h3>Question " + (hgIndex+1) + " / 10</h3><p>" + item.q + "</p>";
+
+  document.getElementById("hg-feedback").textContent = "";
+
+  document.getElementById("hg-score").textContent =
+
+    "Score : " + hgPoints + " / 10";
+
+  document.getElementById("hg-suivant").style.display = "none";
+
+  const zone = document.getElementById("hg-reponses");
+
+  zone.innerHTML = "";
+
+  item.r.forEach((reponse,i)=>{
 
     const bouton = document.createElement("button");
 
-    bouton.textContent = choix;
+    bouton.textContent = reponse;
 
-    bouton.style = "display:block;margin:8px 0;padding:10px;width:100%;border:1px solid #3155d9;border-radius:8px;background:#f3f6ff;";
+    bouton.style.cssText =
 
-    bouton.onclick = function() {
+      "display:block;width:100%;padding:12px;margin:8px 0;border:0;border-radius:8px;background:#e8edff;color:#202b46;font-size:16px;";
 
-      if (reponduHistoire) return;
+    bouton.onclick = ()=>hgVerifier(i);
 
-      reponduHistoire = true;
-
-      if (choix === q.reponse) {
-
-        scoreHistoire++;
-
-        document.getElementById("resultatHistoire").textContent = "Bonne réponse ! 🎉";
-
-      } else {
-
-        document.getElementById("resultatHistoire").textContent =
-
-          "Pas tout à fait. La bonne réponse est : " + q.reponse;
-
-      }
-
-      document.getElementById("suivantHistoire").style.display = "block";
-
-    };
-
-    document.getElementById("choixHistoire").appendChild(bouton);
+    zone.appendChild(bouton);
 
   });
 
 }
 
-function questionSuivanteHistoire() {
+function hgVerifier(choix) {
 
-  numeroHistoire++;
+  if (hgBloque) return;
 
-  if (numeroHistoire < questionsHistoire.length) {
+  hgBloque = true;
 
-    afficherQuestionHistoire();
+  const item = hgQuestions[hgIndex];
+
+  const boutons = document.getElementById("hg-reponses").children;
+
+  if (choix === item.b) {
+
+    hgPoints++;
+
+    document.getElementById("hg-feedback").textContent =
+
+      "✅ Bonne réponse !";
 
   } else {
 
-    document.getElementById("questionHistoire").textContent = "Quiz terminé !";
+    document.getElementById("hg-feedback").textContent =
 
-    document.getElementById("choixHistoire").innerHTML = "";
+      "❌ Mauvaise réponse. La bonne réponse était : " + item.r[item.b];
 
-    document.getElementById("resultatHistoire").textContent =
+  }
 
-      "Ton score : " + scoreHistoire + " / " + questionsHistoire.length;
+  boutons[choix].style.background =
 
-    document.getElementById("suivantHistoire").style.display = "none";
+    choix === item.b ? "#b8edc5" : "#ffc7c7";
+
+  boutons[item.b].style.background = "#b8edc5";
+
+  document.getElementById("hg-score").textContent =
+
+    "Score : " + hgPoints + " / 10";
+
+  document.getElementById("hg-suivant").style.display = "block";
+
+  if (hgIndex === 9) {
+
+    document.getElementById("hg-suivant").textContent = "Voir mon résultat";
+
+  } else {
+
+    document.getElementById("hg-suivant").textContent = "Question suivante";
 
   }
 
 }
 
-afficherQuestionHistoire();
+function hgSuivante() {
+
+  if (hgIndex < 9) {
+
+    hgIndex++;
+
+    hgAfficher();
+
+  } else {
+
+    document.getElementById("hg-question").innerHTML =
+
+      "<h3>Quiz terminé ! 🎉</h3><p>Ton résultat : " +
+
+      hgPoints + " / 10</p>";
+
+    document.getElementById("hg-reponses").innerHTML = "";
+
+    document.getElementById("hg-feedback").textContent =
+
+      hgPoints >= 5 ? "Bravo, continue tes efforts !" : "Continue à apprendre et réessaie !";
+
+    document.getElementById("hg-suivant").style.display = "none";
+
+    document.getElementById("hg-rejouer").style.display = "block";
+
+  }
+
+}
+
+hgDemarrer();
+
 </script>
-<section id="quiz-culture">
 
   <h2>🌍 Quiz de culture générale</h2>
 
