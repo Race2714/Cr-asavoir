@@ -1425,4 +1425,476 @@ function cultureAfficherSuite() {
 demarrerCulture();
 
 </script>
+afficherQuestionCulture();
+
+</script>
+</body> 
+<section id="quiz-culture-auto" style="background:#f3f6ff;padding:20px;border-radius:12px;margin:20px 0;">
+
+  <h2>🌍 Quiz de culture générale</h2>
+
+  <p id="culture-progression"></p>
+
+  <h3 id="culture-question"></h3>
+
+  <div id="culture-choix"></div>
+
+  <p id="culture-resultat"></p>
+
+  <button id="culture-suivant" onclick="cultureSuivante()" style="padding:12px;background:#3155d9;color:white;border:0;border-radius:8px;">
+
+    Valider ma réponse
+
+  </button>
+
+</section>
+
+<script>
+
+const banqueCulture = [
+
+  {q:"Quelle est la capitale de la France ?", c:["Paris","Rome","Madrid"], r:"Paris"},
+
+  {q:"Quel animal est surnommé le roi de la jungle ?", c:["Éléphant","Lion","Tigre"], r:"Lion"},
+
+  {q:"Combien y a-t-il de continents ?", c:["5","6","7"], r:"7"},
+
+  {q:"Quelle planète est la plus proche du Soleil ?", c:["Mars","Mercure","Vénus"], r:"Mercure"},
+
+  {q:"Qui a peint la Joconde ?", c:["Pablo Picasso","Léonard de Vinci","Van Gogh"], r:"Léonard de Vinci"},
+
+  {q:"Quel est le plus grand mammifère du monde ?", c:["Éléphant","Baleine bleue","Girafe"], r:"Baleine bleue"},
+
+  {q:"Dans quel pays se trouvent les pyramides de Gizeh ?", c:["Égypte","Grèce","Inde"], r:"Égypte"},
+
+  {q:"Combien de côtés possède un hexagone ?", c:["5","6","8"], r:"6"},
+
+  {q:"Quelle langue parle-t-on principalement au Brésil ?", c:["Espagnol","Portugais","Français"], r:"Portugais"},
+
+  {q:"Combien de touches possède généralement un piano classique ?", c:["66","88","100"], r:"88"},
+
+  {q:"Quel est le plus grand océan du monde ?", c:["Atlantique","Indien","Pacifique"], r:"Pacifique"},
+
+  {q:"Quelle est la monnaie utilisée aux États-Unis ?", c:["Euro","Dollar","Livre"], r:"Dollar"},
+
+  {q:"Combien de jours compte une année bissextile ?", c:["365","366","364"], r:"366"},
+
+  {q:"Quel organe permet de respirer ?", c:["Le cœur","Les poumons","L'estomac"], r:"Les poumons"},
+
+  {q:"Quelle est la capitale de la République démocratique du Congo ?", c:["Lubumbashi","Kinshasa","Goma"], r:"Kinshasa"}
+
+];
+
+let cultureQuestions = [];
+
+let cultureNumero = 0;
+
+let cultureScore = 0;
+
+let cultureChoix = "";
+
+let cultureTermine = false;
+
+function demarrerCulture() {
+
+  cultureQuestions = [...banqueCulture]
+
+    .sort(() => Math.random() - 0.5)
+
+    .slice(0, 10);
+
+  cultureNumero = 0;
+
+  cultureScore = 0;
+
+  cultureTermine = false;
+
+  afficherCulture();
+
+}
+
+function afficherCulture() {
+
+  cultureChoix = "";
+
+  const q = cultureQuestions[cultureNumero];
+
+  document.getElementById("culture-progression").textContent =
+
+    "Question " + (cultureNumero + 1) + " sur 10";
+
+  document.getElementById("culture-question").textContent = q.q;
+
+  document.getElementById("culture-resultat").textContent = "";
+
+  document.getElementById("culture-suivant").textContent = "Valider ma réponse";
+
+  const zone = document.getElementById("culture-choix");
+
+  zone.innerHTML = "";
+
+  q.c.forEach(reponse => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.cssText = "display:block;width:100%;padding:12px;margin:8px 0;border:1px solid #3155d9;border-radius:8px;background:white;";
+
+    bouton.onclick = () => {
+
+      if (cultureChoix !== "") return;
+
+      cultureChoix = reponse;
+
+      bouton.style.background = "#dce5ff";
+
+    };
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function cultureSuivante() {
+
+  if (cultureTermine) {
+
+    demarrerCulture();
+
+    return;
+
+  }
+
+  if (cultureChoix === "") {
+
+    document.getElementById("culture-resultat").textContent =
+
+      "Choisis une réponse d'abord.";
+
+    return;
+
+  }
+
+  const q = cultureQuestions[cultureNumero];
+
+  if (cultureChoix === q.r) {
+
+    cultureScore++;
+
+    document.getElementById("culture-resultat").textContent = "Bonne réponse ! 🎉";
+
+  } else {
+
+    document.getElementById("culture-resultat").textContent =
+
+      "La bonne réponse était : " + q.r;
+
+  }
+
+  cultureNumero++;
+
+  if (cultureNumero < 10) {
+
+    document.getElementById("culture-suivant").textContent = "Continuer";
+
+    document.getElementById("culture-suivant").onclick = cultureAfficherSuite;
+
+  } else {
+
+    cultureTermine = true;
+
+    document.getElementById("culture-question").textContent =
+
+      "Quiz terminé ! Ton score : " + cultureScore + " / 10";
+
+    document.getElementById("culture-progression").textContent = "Bravo pour ta participation !";
+
+    document.getElementById("culture-choix").innerHTML = "";
+
+    document.getElementById("culture-suivant").textContent = "Rejouer";
+
+    document.getElementById("culture-suivant").onclick = demarrerCulture;
+
+  }
+
+}
+
+function cultureAfficherSuite() {
+
+  document.getElementById("culture-suivant").onclick = cultureSuivante;
+
+  afficherCulture();
+
+}
+
+demarrerCulture();
+
+</script>
+<section id="quiz-anglais-auto" style="background:#eaf7ff;padding:20px;margin:20px 0;border-radius:12px;">
+
+  <h2>🇬🇧 Quiz d'anglais</h2>
+
+  <p>Teste tes connaissances en anglais avec 10 questions !</p>
+
+  <p id="anglais-progression"></p>
+
+  <h3 id="anglais-question"></h3>
+
+  <div id="anglais-choix"></div>
+
+  <p id="anglais-resultat"></p>
+
+  <button id="anglais-suivant" style="padding:12px;background:#3155d9;color:white;border:0;border-radius:8px;" onclick="anglaisValider()">Valider ma réponse</button>
+
+  <button id="anglais-rejouer" style="display:none;padding:12px;background:#3155d9;color:white;border:0;border-radius:8px;" onclick="anglaisDemarrer()">Rejouer</button>
+
+</section>
+
+<script>
+
+const anglaisBase = [
+
+{q:"What is the English word for « Bonjour » ?",c:["Goodbye","Hello","Please","Thanks"],r:"Hello"},
+
+{q:"What is the English word for « Merci » ?",c:["Sorry","Welcome","Thank you","Good night"],r:"Thank you"},
+
+{q:"How do you say « Au revoir » in English?",c:["Good morning","Goodbye","Good evening","Please"],r:"Goodbye"},
+
+{q:"What is the plural of « child »?",c:["Childs","Childes","Children","Childrens"],r:"Children"},
+
+{q:"What is the opposite of « hot »?",c:["Warm","Cold","Big","Fast"],r:"Cold"},
+
+{q:"Complete: I ___ a student.",c:["am","is","are","be"],r:"am"},
+
+{q:"What is the English word for « Maison »?",c:["School","House","Car","Book"],r:"House"},
+
+{q:"What is the past tense of « go »?",c:["Goed","Gone","Went","Going"],r:"Went"},
+
+{q:"What is the English word for « Chat »?",c:["Dog","Bird","Cat","Fish"],r:"Cat"},
+
+{q:"Choose the correct sentence.",c:["She are happy.","She am happy.","She is happy.","She be happy."],r:"She is happy."},
+
+{q:"What is the English word for « Eau »?",c:["Milk","Juice","Water","Bread"],r:"Water"},
+
+{q:"What is the opposite of « big »?",c:["Tall","Small","Long","Wide"],r:"Small"},
+
+{q:"Complete: They ___ playing.",c:["is","am","are","be"],r:"are"},
+
+{q:"What is the English word for « Livre »?",c:["Pen","Book","Table","Chair"],r:"Book"},
+
+{q:"How many days are there in a week?",c:["Five","Six","Seven","Eight"],r:"Seven"},
+
+{q:"What is the English word for « Rouge »?",c:["Blue","Green","Yellow","Red"],r:"Red"},
+
+{q:"What is the opposite of « happy »?",c:["Sad","Nice","Kind","Funny"],r:"Sad"},
+
+{q:"Complete: He ___ football.",c:["play","plays","playing","are play"],r:"plays"},
+
+{q:"What is the English word for « Pomme »?",c:["Orange","Banana","Apple","Grape"],r:"Apple"},
+
+{q:"What is the plural of « box »?",c:["Boxs","Boxes","Boxies","Box"],r:"Boxes"},
+
+{q:"What is the English word for « École »?",c:["Hospital","Market","School","Church"],r:"School"},
+
+{q:"Choose the correct translation of « Je suis fatigué ».",c:["I am hungry.","I am tired.","I am happy.","I am cold."],r:"I am tired."},
+
+{q:"What is the English word for « Chien »?",c:["Cat","Horse","Dog","Cow"],r:"Dog"},
+
+{q:"Complete: We ___ friends.",c:["am","is","are","be"],r:"are"},
+
+{q:"What is the English word for « Nuit »?",c:["Morning","Afternoon","Evening","Night"],r:"Night"}
+
+];
+
+const anglaisBanque = Array.from({length:100},(_,i)=>anglaisBase[i % anglaisBase.length]);
+
+let anglaisQuestions = [];
+
+let anglaisNumero = 0;
+
+let anglaisScore = 0;
+
+let anglaisChoix = "";
+
+let anglaisBloque = false;
+
+function anglaisMelanger(liste) {
+
+  return [...liste].sort(() => Math.random() - 0.5);
+
+}
+
+function anglaisDemarrer() {
+
+  anglaisQuestions = anglaisMelanger(anglaisBanque).slice(0,10);
+
+  anglaisNumero = 0;
+
+  anglaisScore = 0;
+
+  anglaisChoix = "";
+
+  anglaisBloque = false;
+
+  document.getElementById("anglais-rejouer").style.display = "none";
+
+  document.getElementById("anglais-suivant").style.display = "block";
+
+  anglaisAfficher();
+
+}
+
+function anglaisAfficher() {
+
+  anglaisBloque = false;
+
+  anglaisChoix = "";
+
+  const q = anglaisQuestions[anglaisNumero];
+
+  document.getElementById("anglais-progression").textContent =
+
+    "Question " + (anglaisNumero + 1) + " sur 10";
+
+  document.getElementById("anglais-question").textContent = q.q;
+
+  document.getElementById("anglais-resultat").textContent = "";
+
+  document.getElementById("anglais-suivant").textContent = "Valider ma réponse";
+
+  const zone = document.getElementById("anglais-choix");
+
+  zone.innerHTML = "";
+
+  q.c.forEach(reponse => {
+
+    const bouton = document.createElement("button");
+
+    bouton.textContent = reponse;
+
+    bouton.style.cssText =
+
+      "display:block;width:100%;padding:12px;margin:8px 0;border:1px solid #3155d9;border-radius:8px;background:white;font-size:16px;";
+
+    bouton.onclick = () => {
+
+      if (anglaisBloque) return;
+
+      anglaisChoix = reponse;
+
+      Array.from(zone.children).forEach(b => {
+
+        b.style.background = "white";
+
+      });
+
+      bouton.style.background = "#dce5ff";
+
+    };
+
+    zone.appendChild(bouton);
+
+  });
+
+}
+
+function anglaisValider() {
+
+  if (anglaisBloque) {
+
+    anglaisNumero++;
+
+    if (anglaisNumero < 10) {
+
+      anglaisAfficher();
+
+    } else {
+
+      anglaisTerminer();
+
+    }
+
+    return;
+
+  }
+
+  if (anglaisChoix === "") {
+
+    document.getElementById("anglais-resultat").textContent =
+
+      "Choisis d'abord une réponse.";
+
+    return;
+
+  }
+
+  anglaisBloque = true;
+
+  const q = anglaisQuestions[anglaisNumero];
+
+  const boutons = document.getElementById("anglais-choix").children;
+
+  if (anglaisChoix === q.r) {
+
+    anglaisScore++;
+
+    document.getElementById("anglais-resultat").textContent =
+
+      "Bonne réponse ! 🎉";
+
+  } else {
+
+    document.getElementById("anglais-resultat").textContent =
+
+      "Mauvaise réponse. La bonne réponse était : " + q.r;
+
+  }
+
+  Array.from(boutons).forEach(b => {
+
+    if (b.textContent === q.r) {
+
+      b.style.background = "#b8edc5";
+
+    } else if (b.textContent === anglaisChoix) {
+
+      b.style.background = "#ffc7c7";
+
+    }
+
+  });
+
+  document.getElementById("anglais-suivant").textContent =
+
+    anglaisNumero === 9 ? "Voir mon résultat" : "Question suivante";
+
+}
+
+function anglaisTerminer() {
+
+  document.getElementById("anglais-progression").textContent =
+
+    "Quiz terminé !";
+
+  document.getElementById("anglais-question").textContent =
+
+    "Ton score : " + anglaisScore + " / 10";
+
+  document.getElementById("anglais-choix").innerHTML = "";
+
+  document.getElementById("anglais-resultat").textContent =
+
+    anglaisScore >= 5 ? "Bravo ! Continue tes efforts !" : "Continue à apprendre et réessaie !";
+
+  document.getElementById("anglais-suivant").style.display = "none";
+
+  document.getElementById("anglais-rejouer").style.display = "block";
+
+}
+
+anglaisDemarrer();
+
+</script>
 </html>
