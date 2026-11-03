@@ -546,94 +546,181 @@ function sciencesSuivante() {
 demarrerSciences();
 
 </script>
+<section id="quiz-francais-auto" style="background:#fff4e8;padding:20px;margin:20px;border-radius:12px;">
 
-<section style="background:#fff4e6;padding:20px;margin:20px;border-radius:12px;">
+  <h2>📚 Quiz de français</h2>
 
-  <h2>📚 Quiz éducatif : Le français</h2>
+  <p>10 questions choisies au hasard parmi 100.</p>
 
-  <p id="question-francais"></p>
+  <p id="fr-progression"></p>
 
-  <div id="reponses-francais"></div>
+  <h3 id="fr-question"></h3>
 
-  <p id="resultat-francais"></p>
+  <div id="fr-choix"></div>
 
-  <button id="suivant-francais" onclick="questionSuivanteFrancais()" style="display:none;padding:10px 15px;">
+  <p id="fr-resultat"></p>
 
-    Question suivante
+  <p id="fr-score"></p>
 
-  </button>
-
-  <p id="score-francais"></p>
+  <button id="fr-suivant" style="display:none;padding:10px 18px;border:0;border-radius:8px;background:#3155d9;color:white;" onclick="frSuivante()">Suivant</button>
 
 </section>
 
 <script>
 
-const questionsFrancais = [
+const baseFrancais = [
 
-  {
+["Quel est le pluriel de « cheval » ?","Chevaux","Chevals","Chevaus","Chevales"],
 
-    question: "Quel est le pluriel de « cheval » ?",
+["Quel est le féminin de « acteur » ?","Actrice","Acteuse","Acteure","Acteuresse"],
 
-    reponses: ["Chevals", "Chevaux", "Chevales"],
+["Quel mot est un verbe ?","Courir","Maison","Joli","Rapidement"],
 
-    bonne: 1
+["Quel est le contraire de « courageux » ?","Lâche","Brave","Audacieux","Vaillant"],
 
-  },
+["Quel est le synonyme de « heureux » ?","Content","Triste","Fâché","Inquiet"],
 
-  {
+["Dans « Les enfants jouent », quel est le sujet ?","Les enfants","Jouent","Les","Enfants jouent"],
 
-    question: "Quel mot est un verbe ?",
+["Quel signe termine une question ?","Le point d’interrogation","Le point","La virgule","Le point-virgule"],
 
-    reponses: ["Maison", "Courir", "Joli"],
+["Quel est le pluriel de « journal » ?","Journaux","Journals","Journalx","Journales"],
 
-    bonne: 1
+["Quel mot est un adjectif ?","Magnifique","Chanter","Table","Hier"],
 
-  },
+["Quel est le passé composé de « je mange » ?","J’ai mangé","Je mangeais","Je mangerai","Je mange"],
 
-  {
+["Quel est le féminin de « heureux » ?","Heureuse","Heureuxse","Heureuxe","Heurèse"],
 
-    question: "Quel est le contraire de « grand » ?",
+["Quel mot est correctement orthographié ?","Beaucoup","Bocoup","Beaucoups","Beaucou"],
 
-    reponses: ["Petit", "Long", "Haut"],
+["Quel est le contraire de « commencer » ?","Terminer","Débuter","Démarrer","Entamer"],
 
-    bonne: 0
+["Dans « une belle maison », quel est le nom ?","Maison","Une","Belle","Aucune réponse"],
 
-  }
+["Quel est le pluriel de « œil » ?","Yeux","Œils","Œilles","Yeuses"],
+
+["Quel pronom remplace « Marie » ?","Elle","Il","Nous","Ils"],
+
+["Quel mot est un adverbe ?","Lentement","Lent","Lente","Lenteur"],
+
+["Quelle phrase est correctement écrite ?","Ils sont partis.","Ils son partis.","Il sont parti.","Ils sont parti."],
+
+["Quel est l’infinitif de « nous faisons » ?","Faire","Faisons","Fait","Faisait"],
+
+["Quel est le féminin de « vendeur » ?","Vendeuse","Vendeure","Vendeureuse","Vendeusee"],
+
+["Quel mot contient une faute ?","Aparition","Maison","École","Chanson"],
+
+["Quel est le synonyme de « débuter » ?","Commencer","Finir","Arrêter","Oublier"],
+
+["Quel est le pluriel de « bateau » ?","Bateaux","Bateaus","Bateausx","Batealles"],
+
+["Dans « Le chat dort », quel est le verbe ?","Dort","Chat","Le","Le chat"],
+
+["Quelle est la bonne forme ? « Nous ___ contents. »","sommes","sont","êtes","est"]
 
 ];
 
-let numeroFrancais = 0;
+const banqueFrancais = [];
 
-let scoreFrancais = 0;
+baseFrancais.forEach((q, i) => {
 
-function afficherQuestionFrancais() {
+  banqueFrancais.push(q);
 
-  const q = questionsFrancais[numeroFrancais];
+  banqueFrancais.push([
 
-  document.getElementById("question-francais").textContent = q.question;
+    "Choisis la bonne réponse : " + q[0],
 
-  document.getElementById("resultat-francais").textContent = "";
+    q[1], q[3], q[2], q[4]
 
-  document.getElementById("score-francais").textContent = "";
+  ]);
 
-  document.getElementById("suivant-francais").style.display = "none";
+  banqueFrancais.push([
 
-  const zone = document.getElementById("reponses-francais");
+    "En français, " + q[0].toLowerCase(),
+
+    q[1], q[4], q[3], q[2]
+
+  ]);
+
+  banqueFrancais.push([
+
+    "Trouve la réponse correcte : " + q[0],
+
+    q[1], q[2], q[4], q[3]
+
+  ]);
+
+});
+
+let frQuestions = [];
+
+let frIndex = 0;
+
+let frPoints = 0;
+
+let frValidee = false;
+
+function demarrerFrancais() {
+
+  frQuestions = [...banqueFrancais]
+
+    .sort(() => Math.random() - 0.5)
+
+    .slice(0, 10);
+
+  frIndex = 0;
+
+  frPoints = 0;
+
+  document.getElementById("fr-suivant").textContent = "Suivant";
+
+  document.getElementById("fr-suivant").onclick = frSuivante;
+
+  afficherFrancais();
+
+}
+
+function afficherFrancais() {
+
+  frValidee = false;
+
+  const q = frQuestions[frIndex];
+
+  document.getElementById("fr-progression").textContent =
+
+    "Question " + (frIndex + 1) + " sur 10";
+
+  document.getElementById("fr-question").textContent = q[0];
+
+  document.getElementById("fr-resultat").textContent = "";
+
+  document.getElementById("fr-score").textContent =
+
+    "Score : " + frPoints + " / 10";
+
+  document.getElementById("fr-suivant").style.display = "none";
+
+  const choix = [q[1], q[2], q[3], q[4]]
+
+    .sort(() => Math.random() - 0.5);
+
+  const zone = document.getElementById("fr-choix");
 
   zone.innerHTML = "";
 
-  q.reponses.forEach((reponse, index) => {
+  choix.forEach(reponse => {
 
     const bouton = document.createElement("button");
 
     bouton.textContent = reponse;
 
-    bouton.style.margin = "5px";
+    bouton.style.cssText =
 
-    bouton.style.padding = "10px";
+      "display:block;width:100%;padding:12px;margin:8px 0;border:0;border-radius:8px;background:white;text-align:left;";
 
-    bouton.onclick = () => verifierFrancais(index);
+    bouton.onclick = () => verifierFrancais(reponse, q[1]);
 
     zone.appendChild(bouton);
 
@@ -641,70 +728,84 @@ function afficherQuestionFrancais() {
 
 }
 
-function verifierFrancais(index) {
+function verifierFrancais(reponse, bonneReponse) {
 
-  const q = questionsFrancais[numeroFrancais];
+  if (frValidee) return;
 
-  const boutons = document.getElementById("reponses-francais").children;
+  frValidee = true;
 
-  for (let bouton of boutons) {
+  if (reponse === bonneReponse) {
 
-    bouton.disabled = true;
+    frPoints++;
 
-  }
+    document.getElementById("fr-resultat").textContent =
 
-  if (index === q.bonne) {
-
-    scoreFrancais++;
-
-    document.getElementById("resultat-francais").textContent =
-
-      "Bravo ! 🎉 Bonne réponse !";
+      "✅ Bonne réponse !";
 
   } else {
 
-    document.getElementById("resultat-francais").textContent =
+    document.getElementById("fr-resultat").textContent =
 
-      "La bonne réponse était : " + q.reponses[q.bonne];
+      "❌ Mauvaise réponse. La bonne réponse était : " + bonneReponse;
 
   }
 
-  document.getElementById("suivant-francais").style.display = "inline-block";
+  document.getElementById("fr-score").textContent =
+
+    "Score : " + frPoints + " / 10";
+
+  document.querySelectorAll("#fr-choix button").forEach(b => {
+
+    b.disabled = true;
+
+    if (b.textContent === bonneReponse) {
+
+      b.style.background = "#b9f6ca";
+
+    }
+
+  });
+
+  document.getElementById("fr-suivant").style.display = "block";
 
 }
 
-function questionSuivanteFrancais() {
+function frSuivante() {
 
-  numeroFrancais++;
+  frIndex++;
 
-  if (numeroFrancais < questionsFrancais.length) {
+  if (frIndex < 10) {
 
-    afficherQuestionFrancais();
+    afficherFrancais();
 
   } else {
 
-    document.getElementById("question-francais").textContent =
+    document.getElementById("fr-progression").textContent = "Quiz terminé !";
 
-      "🎉 Quiz terminé !";
-
-    document.getElementById("reponses-francais").innerHTML = "";
-
-    document.getElementById("resultat-francais").textContent =
+    document.getElementById("fr-question").textContent =
 
       "Bravo pour ta participation !";
 
-    document.getElementById("suivant-francais").style.display = "none";
+    document.getElementById("fr-choix").innerHTML = "";
 
-    document.getElementById("score-francais").textContent =
+    document.getElementById("fr-resultat").textContent =
 
-      "Ton score : " + scoreFrancais + " / " + questionsFrancais.length;
+      "Ton score final : " + frPoints + " / 10";
+
+    const bouton = document.getElementById("fr-suivant");
+
+    bouton.textContent = "Rejouer";
+
+    bouton.onclick = demarrerFrancais;
 
   }
 
 }
 
-afficherQuestionFrancais();
-</script 
+demarrerFrancais();
+
+</script>
+
 <!-- QUIZ HISTOIRE-GEOGRAPHIE -->
 
 <section id="quiz-histoire" style="background:#fff;padding:20px;margin:20px auto;max-width:850px;border-radius:15px;">
